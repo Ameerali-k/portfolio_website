@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
-
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 
 export async function POST(req: Request) {
     try {
@@ -14,25 +12,35 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
         }
 
+        // Generate unique filename
+        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
+
+        // Convert file to buffer
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Ensure upload dir exists
-        const uploadDir = path.join(process.cwd(), "public/uploads");
-        try {
-            await mkdir(uploadDir, { recursive: true });
-        } catch (e) {
-            // Ignore if exists
+        // Upload to Supabase Storage
+        const { data, error } = await supabase.storage
+            .from('portfolio-images')
+            .upload(filename, buffer, {
+                contentType: file.type,
+                upsert: false
+            });
+
+        if (error) {
+            console.error("Supabase upload error:", error);
+            return NextResponse.json({ error: "Upload failed" }, { status: 500 });
         }
 
-        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
-        const filepath = path.join(uploadDir, filename);
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+            .from('portfolio-images')
+            .getPublicUrl(filename);
 
-        await writeFile(filepath, buffer);
-
-        return NextResponse.json({ url: `/uploads/${filename}` });
+        return NextResponse.json({ url: publicUrl });
     } catch (error: any) {
         console.error("Upload error:", error);
         return NextResponse.json({ error: "Upload failed" }, { status: 500 });
     }
 }
+
