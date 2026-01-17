@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model PortfolioItem {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String
+  projectUrl  String?
+  category    String? // e.g., "Web Design", "Graphic Design"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
