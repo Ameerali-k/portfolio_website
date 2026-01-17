@@ -2,7 +2,7 @@ import LandingContent from "@/components/LandingContent";
 import { prisma } from "@/lib/prisma";
 
 // Revalidate data every hour or on-demand
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 async function getRecentWorks() {
   try {

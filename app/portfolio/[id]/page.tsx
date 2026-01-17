@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, MessageSquare } from "lucide-react";
 import { notFound } from "next/navigation";
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function PortfolioDetailPage({
     params,

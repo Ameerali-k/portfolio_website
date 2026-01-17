@@ -3,7 +3,7 @@ import { PortfolioItem } from "@prisma/client";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function PortfolioPage() {
     const items = await prisma.portfolioItem.findMany({
