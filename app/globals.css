@@ -1,23 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  /* User defined colors */
-  --background: #181f1c;
+  /* User defined colors - High Tech Neon Green Theme */
+  --background: #050806;
   --foreground: #ffffff;
-  --primary: #008000;
+  --primary: #88FF00;
+  --primary-glow: rgba(136, 255, 0, 0.4);
 
-  /* Font variables (assuming Geist is default in layout) */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Font variables */
+  --font-sans: var(--font-noto-sans);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-glow: var(--primary-glow);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.neon-glow {
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.neon-border {
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
 }
 
 /* Base styles */

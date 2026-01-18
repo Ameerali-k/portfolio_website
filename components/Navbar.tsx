@@ -26,7 +26,7 @@ export default function Navbar() {
     return (
         <nav
             ref={navRef}
-            className="fixed top-0 left-0 w-full z-50 bg-[var(--background)]/80 backdrop-blur-md border-b border-white/10"
+            className="fixed top-0 left-0 w-full z-50 glass-card bg-black/40 border-0 border-b border-white/5"
         >
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <Link href="/" className="text-2xl font-bold tracking-tighter text-[var(--foreground)]">
