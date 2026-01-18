@@ -75,13 +75,9 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                         <div className="absolute inset-0 rounded-full neon-glow -z-10" />
                     </motion.div>
 
-                    <motion.h2 variants={item} className="text-[var(--primary)] font-bold mb-4 tracking-[0.3em] text-sm uppercase">
-                        Portfolio 2024
-                    </motion.h2>
-
-                    <motion.h1 variants={item} className="text-5xl md:text-8xl font-black mb-6 tracking-tight">
+                    <motion.h1 variants={item} className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
                         I am <span className="text-white">Ameerali K.</span><br />
-                        <div className="h-20 md:h-28 flex items-center justify-center">
+                        <div className="h-16 md:h-24 flex items-center justify-center">
                             <AnimatePresence mode="wait">
                                 <motion.span
                                     key={TITLES[titleIndex]}
