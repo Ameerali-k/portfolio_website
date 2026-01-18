@@ -76,7 +76,7 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                                     animate={{ y: 0, opacity: 1 }}
                                     exit={{ y: -20, opacity: 0 }}
                                     transition={{ duration: 0.5 }}
-                                    className="text-[var(--primary)] lowercase italic font-serif"
+                                    className="text-[var(--primary)] lowercase italic"
                                 >
                                     {TITLES[titleIndex]}
                                 </motion.span>
