@@ -3,13 +3,26 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Download, Mail } from "lucide-react";
+import { ArrowRight, Download, Mail, Palette, Code, Monitor, Video, Figma, Image as ImageIcon, Layers, Layout, Database, Globe } from "lucide-react";
 
 const TITLES = [
     "Graphic Designer",
     "Web Developer",
     "Presentation Designer",
     "Video Editor"
+];
+
+const EXPERTISE = [
+    { name: 'Photoshop', icon: ImageIcon },
+    { name: 'Illustrator', icon: Palette },
+    { name: 'Premiere Pro', icon: Video },
+    { name: 'After Effects', icon: Layers },
+    { name: 'Figma', icon: Figma },
+    { name: 'Next.js', icon: Globe },
+    { name: 'React', icon: Code },
+    { name: 'Tailwind', icon: Layout },
+    { name: 'PostgreSQL', icon: Database },
+    { name: 'Wordpress', icon: Monitor },
 ];
 
 export default function LandingContent({ recentWorks }: { recentWorks: any[] }) {
@@ -143,14 +156,25 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                             ))}
                         </div>
                     </div>
-                    <div className="glass-card p-10 rounded-3xl relative overflow-hidden group">
+                    <div className="glass-card p-8 rounded-3xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)] opacity-[0.05] blur-3xl group-hover:opacity-20 transition-opacity" />
                         <h3 className="text-2xl font-bold mb-8 text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
-                        <div className="flex flex-wrap gap-3">
-                            {['Photoshop', 'Illustrator', 'Premiere Pro', 'After Effects', 'Figma', 'Next.js', 'React', 'Tailwind', 'PostgreSQL', 'Wordpress'].map(skill => (
-                                <span key={skill} className="px-5 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-medium hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all cursor-default">
-                                    {skill}
-                                </span>
+
+                        {/* Scrollable Container */}
+                        <div className="flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar mask-gradient">
+                            {EXPERTISE.map((skill) => (
+                                <div
+                                    key={skill.name}
+                                    className="flex-shrink-0 snap-start relative group/skill"
+                                >
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)] to-transparent opacity-0 group-hover/skill:opacity-20 blur-xl transition-opacity duration-500 rounded-xl" />
+                                    <div className="relative px-6 py-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3 hover:border-[var(--primary)] hover:bg-white/10 transition-all cursor-default">
+                                        <skill.icon className="w-5 h-5 text-[var(--primary)]" />
+                                        <span className="text-sm font-medium text-white group-hover/skill:text-[var(--primary)] transition-colors">
+                                            {skill.name}
+                                        </span>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
