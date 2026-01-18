@@ -13,14 +13,16 @@ export default async function AdminDashboard() {
     });
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 py-12">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                <div className="flex items-center gap-4">
-                    <h1 className="text-2xl sm:text-3xl font-bold">Admin Dashboard</h1>
+        <div className="container mx-auto px-4 sm:px-6 py-12 relative">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--primary)] opacity-[0.03] blur-[100px] -z-10" />
+
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
+                <div className="flex items-center gap-6">
+                    <h1 className="text-3xl sm:text-4xl font-black tracking-tight">Admin <span className="text-[var(--primary)]">Dashboard</span></h1>
                     <LogoutButton />
                 </div>
-                <Link href="/admin/portfolio/new" className="w-full sm:w-auto bg-[var(--primary)] px-4 py-2 rounded flex justify-center items-center gap-2 font-bold hover:bg-opacity-90 transition-all">
-                    <Plus size={18} /> Add New
+                <Link href="/admin/portfolio/new" className="w-full sm:w-auto bg-[var(--primary)] text-black px-8 py-3 rounded-xl flex justify-center items-center gap-2 font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all neon-glow active:scale-95">
+                    <Plus size={20} /> Add New Project
                 </Link>
             </div>
 

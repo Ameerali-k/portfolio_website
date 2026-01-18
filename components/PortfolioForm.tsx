@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -78,96 +78,111 @@ export default function PortfolioForm({ initialData, isEdit }: PortfolioFormProp
     };
 
     return (
-        <div className="container mx-auto px-6 py-12 max-w-2xl">
-            <Link href="/admin/dashboard" className="flex items-center gap-2 mb-6 text-sm opacity-60 hover:opacity-100">
+        <div className="container mx-auto px-6 py-12 max-w-2xl relative">
+            <div className="absolute top-1/4 -right-20 w-64 h-64 bg-[var(--primary)] opacity-[0.03] blur-[120px] -z-10" />
+
+            <Link href="/admin/dashboard" className="flex items-center gap-2 mb-8 text-sm font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">
                 <ArrowLeft size={16} /> Back to Dashboard
             </Link>
 
-            <h1 className="text-3xl font-bold mb-8">{isEdit ? "Edit Portfolio" : "Add New Portfolio"}</h1>
+            <h1 className="text-4xl font-black mb-10 tracking-tight">{isEdit ? "Edit" : "Add New"} <span className="text-[var(--primary)]">Project</span></h1>
 
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white/5 p-8 rounded-xl border border-white/10">
-                <div>
-                    <label className="block text-sm font-bold mb-2">Title</label>
-                    <input
-                        type="text"
-                        className="w-full bg-white/10 border border-white/10 rounded p-3 text-white placeholder-white/30 focus:border-[var(--primary)] outline-none transition-colors"
-                        value={formData.title}
-                        onChange={e => setFormData({ ...formData, title: e.target.value })}
-                        required
-                    />
-                </div>
+            <form onSubmit={handleSubmit} className="glass-card p-10 rounded-3xl space-y-8 relative overflow-hidden">
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <label className="text-xs font-black uppercase tracking-widest text-[var(--primary)] opacity-80">Project Title</label>
+                        <input
+                            type="text"
+                            placeholder="Enter project name"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-white/20 focus:border-[var(--primary)] outline-none transition-all focus:bg-white/[0.08]"
+                            value={formData.title}
+                            onChange={e => setFormData({ ...formData, title: e.target.value })}
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-bold mb-2">Category</label>
-                    <input
-                        type="text"
-                        className="w-full bg-white/10 border border-white/10 rounded p-3 text-white placeholder-white/30 focus:border-[var(--primary)] outline-none transition-colors"
-                        value={formData.category}
-                        onChange={e => setFormData({ ...formData, category: e.target.value })}
-                        placeholder="e.g. Branding, Web Design"
-                    />
-                </div>
+                    <div className="space-y-2">
+                        <label className="text-xs font-black uppercase tracking-widest text-[var(--primary)] opacity-80">Category</label>
+                        <input
+                            type="text"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-white/20 focus:border-[var(--primary)] outline-none transition-all focus:bg-white/[0.08]"
+                            value={formData.category}
+                            onChange={e => setFormData({ ...formData, category: e.target.value })}
+                            placeholder="e.g. Graphic Design, Web Development"
+                        />
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-bold mb-2">Description</label>
-                    <textarea
-                        className="w-full bg-white/10 border border-white/10 rounded p-3 text-white placeholder-white/30 h-32 focus:border-[var(--primary)] outline-none transition-colors"
-                        value={formData.description}
-                        onChange={e => setFormData({ ...formData, description: e.target.value })}
-                        required
-                    />
-                </div>
+                    <div className="space-y-2">
+                        <label className="text-xs font-black uppercase tracking-widest text-[var(--primary)] opacity-80">Description</label>
+                        <textarea
+                            className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-white/20 h-40 focus:border-[var(--primary)] outline-none transition-all focus:bg-white/[0.08] resize-none"
+                            placeholder="Describe the project..."
+                            value={formData.description}
+                            onChange={e => setFormData({ ...formData, description: e.target.value })}
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-bold mb-2">Image</label>
+                    <div className="space-y-2">
+                        <label className="text-xs font-black uppercase tracking-widest text-[var(--primary)] opacity-80">Project Visual</label>
 
-                    {formData.imageUrl ? (
-                        <div className="relative w-full h-64 bg-black/50 rounded overflow-hidden border border-white/10">
-                            <img src={formData.imageUrl} alt="Preview" className="w-full h-full object-cover" />
-                            <button
-                                type="button"
-                                onClick={() => setFormData({ ...formData, imageUrl: "" })}
-                                className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
-                            >
-                                <X size={16} />
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="w-full">
-                            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg cursor-pointer bg-white/5 hover:bg-white/10 transition-colors">
-                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <Upload className="mb-2 opacity-50" />
-                                    <p className="text-sm text-gray-400">{uploading ? "Uploading..." : "Click to upload image"}</p>
-                                </div>
-                                <input
-                                    type="file"
-                                    className="hidden"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                    disabled={uploading}
-                                />
-                            </label>
-                        </div>
-                    )}
-                </div>
+                        {formData.imageUrl ? (
+                            <div className="relative w-full aspect-video bg-black/50 rounded-2xl overflow-hidden border border-white/10 neon-glow">
+                                <img src={formData.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, imageUrl: "" })}
+                                    className="absolute top-4 right-4 bg-red-500/80 backdrop-blur-md text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+                                >
+                                    <X size={20} />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="w-full">
+                                <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-white/10 rounded-2xl cursor-pointer bg-white/5 hover:bg-white/[0.08] hover:border-[var(--primary)]/30 transition-all">
+                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                        <Upload className={`mb-3 ${uploading ? 'animate-bounce text-[var(--primary)]' : 'opacity-40'}`} size={32} />
+                                        <p className="text-sm font-bold tracking-widest uppercase opacity-40">{uploading ? "Uploading..." : "Drop file or Click"}</p>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        disabled={uploading}
+                                    />
+                                </label>
+                            </div>
+                        )}
+                    </div>
 
-                <div>
-                    <label className="block text-sm font-bold mb-2">Project URL</label>
-                    <input
-                        type="text"
-                        className="w-full bg-white/10 border border-white/10 rounded p-3 text-white placeholder-white/30 focus:border-[var(--primary)] outline-none transition-colors"
-                        value={formData.projectUrl}
-                        onChange={e => setFormData({ ...formData, projectUrl: e.target.value })}
-                        placeholder="https://..."
-                    />
+                    <div className="space-y-2">
+                        <label className="text-xs font-black uppercase tracking-widest text-[var(--primary)] opacity-80">Live Link (Optional)</label>
+                        <input
+                            type="text"
+                            className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-white/20 focus:border-[var(--primary)] outline-none transition-all focus:bg-white/[0.08]"
+                            value={formData.projectUrl}
+                            onChange={e => setFormData({ ...formData, projectUrl: e.target.value })}
+                            placeholder="https://yourproject.com"
+                        />
+                    </div>
                 </div>
 
                 <button
                     disabled={loading || uploading || !formData.imageUrl}
-                    className="w-full bg-[var(--primary)] text-white py-3 rounded font-bold hover:bg-opacity-90 disabled:opacity-50 transition-all cursor-pointer"
+                    className="w-full bg-[var(--primary)] text-black py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50 disabled:scale-100 flex items-center justify-center gap-3 neon-glow mt-4"
                 >
-                    {loading ? "Saving..." : "Save Portfolio Item"}
+                    {loading ? (
+                        <>
+                            <Loader2 size={18} className="animate-spin" />
+                            Saving Project...
+                        </>
+                    ) : (
+                        isEdit ? "Update Portfolio Item" : "Save Portfolio Item"
+                    )}
                 </button>
+
+                <div className="absolute top-0 left-0 w-32 h-32 bg-[var(--primary)] opacity-[0.02] blur-3xl -z-10" />
             </form>
         </div>
     );
