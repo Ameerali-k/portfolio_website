@@ -9,7 +9,7 @@ export async function GET() {
         const password = await hashPassword("Admin123");
         const user = await prisma.user.upsert({
             where: { username: "admin" },
-            update: {},
+            update: { password },
             create: {
                 username: "admin",
                 password,
