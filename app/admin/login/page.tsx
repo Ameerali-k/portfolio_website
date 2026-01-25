@@ -18,10 +18,17 @@ export default function AdminLogin() {
         setIsLoading(true);
 
         try {
+            // Client-side hashing to obscure password in network payload
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashedPassword = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+
             const res = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, password: hashedPassword }),
             });
 
             if (res.ok) {
