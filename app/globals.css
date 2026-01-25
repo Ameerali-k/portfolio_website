@@ -8,7 +8,7 @@
   --primary-glow: rgba(136, 255, 0, 0.4);
 
   /* Font variables */
-  --font-sans: var(--font-noto-sans);
+  --font-sans: var(--font-outfit);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
