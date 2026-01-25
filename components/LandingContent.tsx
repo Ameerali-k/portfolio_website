@@ -27,8 +27,6 @@ const EXPERTISE = [
 
 export default function LandingContent({ recentWorks }: { recentWorks: any[] }) {
     const [titleIndex, setTitleIndex] = useState(0);
-    const expertiseScrollRef = useState<HTMLDivElement | null>(null)[0];
-    const [scrollDirection, setScrollDirection] = useState(1);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -37,30 +35,17 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
         return () => clearInterval(interval);
     }, []);
 
-    // Auto-scroll expertise carousel
-    useEffect(() => {
+    // Scroll functions for expertise carousel
+    const scrollExpertise = (direction: 'left' | 'right') => {
         const scrollContainer = document.querySelector('.expertise-scroll');
         if (!scrollContainer) return;
 
-        const scroll = () => {
-            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            const currentScroll = scrollContainer.scrollLeft;
-
-            if (scrollDirection === 1 && currentScroll >= maxScroll - 10) {
-                setScrollDirection(-1);
-            } else if (scrollDirection === -1 && currentScroll <= 10) {
-                setScrollDirection(1);
-            }
-
-            scrollContainer.scrollBy({
-                left: scrollDirection * 2,
-                behavior: 'smooth'
-            });
-        };
-
-        const intervalId = setInterval(scroll, 30);
-        return () => clearInterval(intervalId);
-    }, [scrollDirection]);
+        const scrollAmount = 300;
+        scrollContainer.scrollBy({
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+        });
+    };
 
     const container = {
         hidden: { opacity: 0 },
@@ -181,7 +166,28 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                     </div>
                     <div className="glass-card p-8 rounded-3xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)] opacity-[0.05] blur-3xl group-hover:opacity-20 transition-opacity" />
-                        <h3 className="text-2xl font-bold mb-8 text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
+
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-2xl font-bold text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
+
+                            {/* Arrow Buttons */}
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => scrollExpertise('left')}
+                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all group/btn"
+                                    aria-label="Scroll left"
+                                >
+                                    <ArrowRight className="w-5 h-5 rotate-180 text-white group-hover/btn:text-[var(--primary)] transition-colors" />
+                                </button>
+                                <button
+                                    onClick={() => scrollExpertise('right')}
+                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all group/btn"
+                                    aria-label="Scroll right"
+                                >
+                                    <ArrowRight className="w-5 h-5 text-white group-hover/btn:text-[var(--primary)] transition-colors" />
+                                </button>
+                            </div>
+                        </div>
 
                         {/* Scrollable Container */}
                         <div className="expertise-scroll flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar mask-gradient">
