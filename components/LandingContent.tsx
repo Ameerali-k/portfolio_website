@@ -172,28 +172,7 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                     </div>
                     <div className="glass-card p-8 rounded-3xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)] opacity-[0.05] blur-3xl group-hover:opacity-20 transition-opacity" />
-
-                        <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-2xl font-bold text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
-
-                            {/* Arrow Buttons */}
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => scrollExpertise('left')}
-                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all group/btn"
-                                    aria-label="Scroll left"
-                                >
-                                    <ArrowRight className="w-5 h-5 rotate-180 text-white group-hover/btn:text-[var(--primary)] transition-colors" />
-                                </button>
-                                <button
-                                    onClick={() => scrollExpertise('right')}
-                                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all group/btn"
-                                    aria-label="Scroll right"
-                                >
-                                    <ArrowRight className="w-5 h-5 text-white group-hover/btn:text-[var(--primary)] transition-colors" />
-                                </button>
-                            </div>
-                        </div>
+                        <h3 className="text-2xl font-bold mb-8 text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
 
                         {/* Scrollable Container */}
                         <div className="expertise-scroll flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar mask-gradient">
