@@ -40,9 +40,15 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
         const scrollContainer = document.querySelector('.expertise-scroll');
         if (!scrollContainer) return;
 
-        const scrollAmount = 300;
+        // Get the first expertise item to calculate its width
+        const firstItem = scrollContainer.querySelector('.expertise-item');
+        if (!firstItem) return;
+
+        // Calculate item width including gap (16px = gap-4)
+        const itemWidth = firstItem.getBoundingClientRect().width + 16;
+
         scrollContainer.scrollBy({
-            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            left: direction === 'left' ? -itemWidth : itemWidth,
             behavior: 'smooth'
         });
     };
@@ -194,7 +200,7 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                             {EXPERTISE.map((skill) => (
                                 <div
                                     key={skill.name}
-                                    className="flex-shrink-0 snap-start relative group/skill"
+                                    className="expertise-item flex-shrink-0 snap-start relative group/skill"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)] to-transparent opacity-0 group-hover/skill:opacity-20 blur-xl transition-opacity duration-500 rounded-xl" />
                                     <div className="relative px-6 py-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3 hover:border-[var(--primary)] hover:bg-white/10 transition-all cursor-default">
