@@ -19,11 +19,13 @@ export default async function AdminDashboard() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
                 <div className="flex items-center gap-6">
                     <h1 className="text-3xl sm:text-4xl font-black tracking-tight">Admin <span className="text-[var(--primary)]">Dashboard</span></h1>
+                </div>
+                <div className="flex gap-4 w-full sm:w-auto">
+                    <Link href="/admin/portfolio/new" className="flex-1 sm:flex-none bg-[var(--primary)] text-black px-8 py-3 rounded-xl flex justify-center items-center gap-2 font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all neon-glow active:scale-95">
+                        <Plus size={20} /> Add New Project
+                    </Link>
                     <LogoutButton />
                 </div>
-                <Link href="/admin/portfolio/new" className="w-full sm:w-auto bg-[var(--primary)] text-black px-8 py-3 rounded-xl flex justify-center items-center gap-2 font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all neon-glow active:scale-95">
-                    <Plus size={20} /> Add New Project
-                </Link>
             </div>
 
             {/* Mobile View: Cards */}
