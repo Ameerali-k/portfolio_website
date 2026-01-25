@@ -27,6 +27,8 @@ const EXPERTISE = [
 
 export default function LandingContent({ recentWorks }: { recentWorks: any[] }) {
     const [titleIndex, setTitleIndex] = useState(0);
+    const expertiseScrollRef = useState<HTMLDivElement | null>(null)[0];
+    const [scrollDirection, setScrollDirection] = useState(1);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,6 +36,31 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
         }, 3000);
         return () => clearInterval(interval);
     }, []);
+
+    // Auto-scroll expertise carousel
+    useEffect(() => {
+        const scrollContainer = document.querySelector('.expertise-scroll');
+        if (!scrollContainer) return;
+
+        const scroll = () => {
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            const currentScroll = scrollContainer.scrollLeft;
+
+            if (scrollDirection === 1 && currentScroll >= maxScroll - 10) {
+                setScrollDirection(-1);
+            } else if (scrollDirection === -1 && currentScroll <= 10) {
+                setScrollDirection(1);
+            }
+
+            scrollContainer.scrollBy({
+                left: scrollDirection * 2,
+                behavior: 'smooth'
+            });
+        };
+
+        const intervalId = setInterval(scroll, 30);
+        return () => clearInterval(intervalId);
+    }, [scrollDirection]);
 
     const container = {
         hidden: { opacity: 0 },
@@ -157,7 +184,7 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
                         <h3 className="text-2xl font-bold mb-8 text-[var(--primary)] tracking-widest uppercase">Expertise</h3>
 
                         {/* Scrollable Container */}
-                        <div className="flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar mask-gradient">
+                        <div className="expertise-scroll flex overflow-x-auto gap-4 pb-4 -mx-2 px-2 snap-x hide-scrollbar mask-gradient">
                             {EXPERTISE.map((skill) => (
                                 <div
                                     key={skill.name}
