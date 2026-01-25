@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
     const navRef = useRef(null);
@@ -26,7 +27,7 @@ export default function Navbar() {
     return (
         <nav
             ref={navRef}
-            className="fixed top-4 left-0 right-0 max-w-7xl mx-auto z-50 rounded-2xl glass-card bg-black/40 border border-white/5 px-6"
+            className="fixed top-4 left-4 right-4 max-w-7xl lg:mx-auto z-50 rounded-2xl glass-card bg-black/40 border border-white/5 px-6"
         >
             <div className="flex justify-between items-center h-20">
                 {/* 1. Left: Logo */}
@@ -68,27 +69,35 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
-            {isOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full mt-2 bg-black border border-white/10 rounded-2xl p-4 flex flex-col gap-4 shadow-lg overflow-hidden">
-                    {links.filter(l => l.name !== "Contact").map((link) => (
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="md:hidden absolute top-full left-0 right-0 mt-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl p-4 flex flex-col gap-2 shadow-2xl overflow-hidden"
+                    >
+                        {links.filter(l => l.name !== "Contact").map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="text-lg font-medium hover:text-[var(--primary)] px-6 py-4 rounded-2xl hover:bg-white/5 transition-all"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
                         <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-lg font-medium hover:text-[var(--primary)] px-4 py-2"
+                            href="/contact"
+                            className="bg-[var(--primary)] text-black text-center py-4 rounded-2xl font-black uppercase tracking-widest text-sm mx-2 mt-2 hover:scale-[1.02] active:scale-95 transition-all"
                             onClick={() => setIsOpen(false)}
                         >
-                            {link.name}
+                            Contact Me
                         </Link>
-                    ))}
-                    <Link
-                        href="/contact"
-                        className="bg-[var(--primary)] text-black text-center py-3 rounded-xl font-bold uppercase tracking-wider mx-4 mb-2"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        Contact Me
-                    </Link>
-                </div>
-            )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }
