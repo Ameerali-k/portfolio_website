@@ -37,7 +37,7 @@ export default function Navbar() {
                 </div>
 
                 {/* 2. Center: Navigation Links */}
-                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8 items-center bg-white/5 px-8 py-3 rounded-full border border-white/5">
+                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8 items-center">
                     {links.filter(l => l.name !== "Contact").map((link) => (
                         <Link
                             key={link.name}
