@@ -26,16 +26,19 @@ export default function Navbar() {
     return (
         <nav
             ref={navRef}
-            className="fixed top-0 left-0 w-full z-50 glass-card bg-black/40 border-0 border-b border-white/5"
+            className="fixed top-4 left-0 right-0 max-w-7xl mx-auto z-50 rounded-2xl glass-card bg-black/40 border border-white/5 px-6"
         >
-            <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold tracking-tighter text-[var(--foreground)]">
-                    AMEERALI<span className="text-[var(--primary)]">.</span>
-                </Link>
+            <div className="flex justify-between items-center h-20">
+                {/* 1. Left: Logo */}
+                <div className="flex-shrink-0">
+                    <Link href="/" className="text-2xl font-bold tracking-tighter text-[var(--foreground)]">
+                        AMEERALI<span className="text-[var(--primary)]">.</span>
+                    </Link>
+                </div>
 
-                {/* Desktop Menu */}
-                <div className="hidden md:flex gap-8 items-center">
-                    {links.map((link) => (
+                {/* 2. Center: Navigation Links */}
+                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8 items-center bg-white/5 px-8 py-3 rounded-full border border-white/5">
+                    {links.filter(l => l.name !== "Contact").map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
@@ -44,7 +47,16 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                </div>
 
+                {/* 3. Right: Contact Button */}
+                <div className="hidden md:flex items-center gap-4">
+                    <Link
+                        href="/contact"
+                        className="bg-[var(--primary)] text-black px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+                    >
+                        Contact
+                    </Link>
                 </div>
 
                 {/* Mobile Toggle */}
@@ -57,18 +69,24 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-[var(--background)] border-b border-white/10 p-4 flex flex-col gap-4 shadow-lg">
-                    {links.map((link) => (
+                <div className="md:hidden absolute top-full left-0 w-full mt-2 bg-black border border-white/10 rounded-2xl p-4 flex flex-col gap-4 shadow-lg overflow-hidden">
+                    {links.filter(l => l.name !== "Contact").map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
-                            className="text-lg font-medium hover:text-[var(--primary)]"
+                            className="text-lg font-medium hover:text-[var(--primary)] px-4 py-2"
                             onClick={() => setIsOpen(false)}
                         >
                             {link.name}
                         </Link>
                     ))}
-
+                    <Link
+                        href="/contact"
+                        className="bg-[var(--primary)] text-black text-center py-3 rounded-xl font-bold uppercase tracking-wider mx-4 mb-2"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        Contact Me
+                    </Link>
                 </div>
             )}
         </nav>
