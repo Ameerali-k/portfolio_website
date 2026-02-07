@@ -69,99 +69,76 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
     };
 
     return (
-        <div className="w-full overflow-hidden">
+        <div className="container mx-auto px-6 overflow-hidden">
             {/* Hero Section */}
-            <section className="min-h-screen flex flex-col items-center justify-center relative text-center hero-bg overflow-hidden -mx-6 px-6" >
-                <div className="hero-gradient-overlay" />
-
-                {/* Floating Pixel Elements (Left) */}
-                <div className="absolute left-10 md:left-20 top-1/2 -translate-y-1/2 hidden lg:block opacity-20">
-                    <div className="grid grid-cols-2 gap-1">
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-transparent" />
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-black/10" />
-                    </div>
-                </div>
-
-                {/* Floating Pixel Elements (Right) */}
-                <div className="absolute right-10 md:right-20 top-1/2 -translate-y-1/2 hidden lg:block opacity-20">
-                    <div className="grid grid-cols-2 gap-1">
-                        <div className="w-12 h-12 bg-transparent" />
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-black/10" />
-                        <div className="w-12 h-12 bg-transparent" />
-                        <div className="w-12 h-12 bg-black/10" />
-                    </div>
-                </div>
-
+            <section className="min-h-screen flex flex-col items-center justify-center relative text-center">
                 <motion.div
                     variants={container}
                     initial="hidden"
                     animate="show"
-                    className="z-10 flex flex-col items-center max-w-4xl mx-auto w-full"
+                    className="z-10 flex flex-col items-center"
                 >
-                    {/* Title */}
-                    <motion.h1 variants={item} className="text-5xl md:text-7xl font-medium mb-4 text-black tracking-tight">
-                        I am <span className="font-semibold">Ameerali</span>
-                    </motion.h1>
-
-                    <motion.h2 variants={item} className="text-3xl md:text-5xl font-light mb-12 text-black/80">
-                        Graphic Designer
-                    </motion.h2>
-
-                    {/* Central Image & Clients Badge */}
-                    <div className="relative w-full flex justify-center items-center mb-12">
-                        {/* Profile Image */}
-                        <motion.div
-                            variants={item}
-                            className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gray-200 border-8 border-white shadow-2xl relative z-10 overflow-hidden"
-                        >
+                    {/* Profile Image */}
+                    <motion.div
+                        variants={item}
+                        className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-[var(--primary)] p-1 mb-8 relative"
+                    >
+                        <div className="w-full h-full rounded-full overflow-hidden relative">
                             <img
                                 src="/profile.jpg"
                                 alt="Ameerali K"
-                                className="w-full h-full object-center object-cover"
+                                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                             />
-                        </motion.div>
+                        </div>
+                        <div className="absolute inset-0 rounded-full neon-glow -z-10" />
+                    </motion.div>
 
-                        {/* Clients Badge (Right side of image) */}
-                        <motion.div
-                            variants={item}
-                            className="absolute right-0 md:right-10 lg:right-20 top-1/2 -translate-y-1/2 flex flex-col items-center bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-white/20"
-                        >
-                            <div className="flex -space-x-4 mb-2">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="w-10 h-10 rounded-full bg-gray-300 border-2 border-white" />
-                                ))}
-                            </div>
-                            <div className="text-center">
-                                <span className="block text-2xl font-bold text-black">+100</span>
-                                <span className="text-xs font-medium text-black/60 uppercase tracking-widest">Clients</span>
-                            </div>
-                        </motion.div>
-                    </div>
+                    <motion.h1 variants={item} className="text-4xl md:text-6xl font-black mb-6 tracking-tight">
+                        I am <span className="text-white">Ameerali K.</span><br />
+                        <div className="h-16 md:h-24 flex items-center justify-center">
+                            <AnimatePresence mode="wait">
+                                <motion.span
+                                    key={TITLES[titleIndex]}
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -20, opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="text-[var(--primary)] lowercase italic"
+                                >
+                                    {TITLES[titleIndex]}
+                                </motion.span>
+                            </AnimatePresence>
+                        </div>
+                    </motion.h1>
 
-                    {/* Description */}
-                    <motion.p variants={item} className="text-lg md:text-xl text-black/70 mb-10 max-w-2xl leading-relaxed font-medium">
-                        Creating refined digital experiences through minimalist design and performance-driven development, serving clients worldwide.
+                    <motion.p variants={item} className="text-lg md:text-xl opacity-60 mb-10 max-w-2xl leading-relaxed">
+                        Crafting digital experiences through minimalist design and high-performance development. Based in Dubai, working globally.
                     </motion.p>
 
-                    {/* CTA Button */}
-                    <motion.div variants={item}>
+                    <motion.div variants={item} className="flex flex-col sm:flex-row gap-6">
                         <Link
                             href="/portfolio"
-                            className="bg-[var(--primary)] text-black px-10 py-4 font-bold text-lg tracking-wide hover:scale-105 transition-transform shadow-lg shadow-[#88ff00]/20"
+                            className="bg-[var(--primary)] text-black px-10 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:scale-105 transition-transform neon-glow"
                         >
-                            View Projects
+                            View Projects <ArrowRight size={20} />
                         </Link>
+                        <a
+                            href="mailto:ameeralikprm@gmail.com"
+                            className="glass-card text-white px-10 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-colors"
+                        >
+                            Get in Touch <Mail size={20} />
+                        </a>
                     </motion.div>
                 </motion.div>
+
+                {/* Animated Background Elements */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--primary)] rounded-full blur-[180px] opacity-[0.08] -z-10 animate-pulse" />
+                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-[var(--primary)] rounded-full neon-glow animate-ping" />
+                <div className="absolute bottom-1/4 right-1/4 w-1 h-1 bg-[var(--primary)] rounded-full neon-glow animate-ping [animation-delay:1s]" />
             </section>
 
             {/* About Section */}
-            <section className="py-32 relative" >
+            <section className="py-32 relative">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -219,7 +196,7 @@ export default function LandingContent({ recentWorks }: { recentWorks: any[] }) 
             </section>
 
             {/* Recent Works */}
-            <section className="py-32" >
+            <section className="py-32">
                 <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-20 gap-8">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}

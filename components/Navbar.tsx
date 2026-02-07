@@ -31,68 +31,74 @@ export default function Navbar() {
     return (
         <nav
             ref={navRef}
-            className="fixed top-6 left-0 right-0 z-50 px-4 md:px-8 flex justify-between items-start max-w-[1400px] mx-auto pointer-events-none"
+            className="fixed top-4 left-4 right-4 max-w-7xl lg:mx-auto z-50 rounded-2xl glass-card bg-black/40 border border-white/5 px-6"
         >
-            {/* 1. Left: Logo - Pointer events auto to allow clicking */}
-            <div className="pointer-events-auto">
-                <Link href="/" className="bg-[var(--primary)] text-black px-6 py-3 font-bold text-lg tracking-tight hover:opacity-90 transition-opacity block">
-                    Ameerali
-                </Link>
-            </div>
-
-            {/* 2. Center: Navigation Links - Pointer events auto */}
-            <div className="hidden md:flex pointer-events-auto bg-[#0a0f0d] text-white px-8 py-3 rounded-none items-center gap-8">
-                {links.filter(l => l.name !== "Contact").map((link) => (
-                    <Link
-                        key={link.name}
-                        href={link.href}
-                        className="text-sm font-medium hover:text-[var(--primary)] transition-colors"
-                    >
-                        {link.name}
+            <div className="flex justify-between items-center h-20">
+                {/* 1. Left: Logo */}
+                <div className="flex-shrink-0">
+                    <Link href="/" className="text-2xl font-bold tracking-tighter text-[var(--foreground)]">
+                        AMEERALI<span className="text-[var(--primary)]">.</span>
                     </Link>
-                ))}
+                </div>
+
+                {/* 2. Center: Navigation Links */}
+                <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-8 items-center">
+                    {links.filter(l => l.name !== "Contact").map((link) => (
+                        <Link
+                            key={link.name}
+                            href={link.href}
+                            className="text-sm font-medium hover:text-[var(--primary)] transition-colors"
+                        >
+                            {link.name}
+                        </Link>
+                    ))}
+                </div>
+
+                {/* 3. Right: Contact Button */}
+                <div className="hidden md:flex items-center gap-4">
+                    <Link
+                        href="/contact"
+                        className="bg-[var(--primary)] text-black px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider hover:opacity-90 transition-opacity"
+                    >
+                        Contact
+                    </Link>
+                </div>
+
+                {/* Mobile Toggle */}
+                <div className="md:hidden">
+                    <button onClick={() => setIsOpen(!isOpen)}>
+                        {isOpen ? <X /> : <Menu />}
+                    </button>
+                </div>
             </div>
 
-            {/* 3. Right: Contact Button - Pointer events auto */}
-            <div className="hidden md:block pointer-events-auto">
-                <Link
-                    href="/contact"
-                    className="bg-[var(--primary)] text-black px-6 py-3 font-bold text-lg tracking-tight hover:opacity-90 transition-opacity block"
-                >
-                    Contact Now
-                </Link>
-            </div>
-
-            {/* Mobile Toggle */}
-            <div className="md:hidden pointer-events-auto">
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="bg-black text-white p-3 hover:bg-black/90 transition-colors"
-                >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
-
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="md:hidden absolute top-20 left-4 right-4 bg-[#0a0f0d] text-white p-6 shadow-2xl pointer-events-auto z-50 flex flex-col gap-4 border-l-4 border-[var(--primary)]"
+                        className="md:hidden absolute top-full left-0 right-0 mt-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl p-4 flex flex-col gap-2 shadow-2xl overflow-hidden"
                     >
-                        {links.map((link) => (
+                        {links.filter(l => l.name !== "Contact").map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className={`text-xl font-medium hover:text-[var(--primary)] transition-colors ${link.name === "Contact" ? "text-[var(--primary)] font-bold" : ""}`}
+                                className="text-lg font-medium hover:text-[var(--primary)] px-6 py-4 rounded-2xl hover:bg-white/5 transition-all"
                                 onClick={() => setIsOpen(false)}
                             >
-                                {link.name === "Contact" ? "Contact Now" : link.name}
+                                {link.name}
                             </Link>
                         ))}
+                        <Link
+                            href="/contact"
+                            className="bg-[var(--primary)] text-black text-center py-4 rounded-2xl font-black uppercase tracking-widest text-sm mx-2 mt-2 hover:scale-[1.02] active:scale-95 transition-all"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Contact Me
+                        </Link>
                     </motion.div>
                 )}
             </AnimatePresence>
