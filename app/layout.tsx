@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Sora } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body
-        className={`${outfit.variable} antialiased min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]`}
+        className={`${sora.variable} antialiased min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]`}
       >
         <Navbar />
         <main className="flex-grow pt-16">
